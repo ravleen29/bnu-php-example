@@ -1,51 +1,57 @@
 <?php
+    include("_includes/config.inc");
+    include("_includes/dbconnect.inc");
+    include("_includes/functions.inc");
 
-   include("_includes/config.inc");
-   include("_includes/dbconnect.inc");
-   include("_includes/functions.inc");
+    // check if logged in
+    if (isset($_SESSION['id'])) {
+        echo template("templates/partials/header.php");
+        echo template("templates/partials/nav.php");
 
-   // check logged in
-   if (isset($_SESSION['id'])) {
+        $sql = "SELECT * FROM student";
+        $result = mysqli_query($conn, $sql);
 
-      echo template("templates/partials/header.php");
-      echo template("templates/partials/nav.php");
+        // Form to delete students
+        echo "<form action='deletestudents.php' method='POST'>";
+        echo "<table border='1'>";
+        echo "<tr><th>Student ID</th><th>First Name</th><th>Last Name</th><th>DOB</th><th>House</th><th>Town</th><th>County</th><th>Country</th><th>Postcode</th></tr>";
+        
+        // Display students in a table
+        while($row = mysqli_fetch_array($result)) {
+            echo "<tr>";
+            echo "<td>{$row["studentid"]}</td>";
+            echo "<td>{$row["firstname"]}</td>";
+            echo "<td>{$row["lastname"]}</td>";
+            echo "<td>{$row["dob"]}</td>";
+            echo "<td>{$row["house"]}</td>";
+            echo "<td>{$row["town"]}</td>";
+            echo "<td>{$row["county"]}</td>";
+            echo "<td>{$row["country"]}</td>";
+            echo "<td>{$row["postcode"]}</td>";
+            echo "<td><input type='checkbox' name='students[]' value='{$row['studentid']}'></td>";
+            echo "</tr>";
+        }
+        echo "</table>";
 
-      $sql = "SELECT * FROM student";
+        // Add Student Button
+        echo "<a href='addstudent.php'><button type='button'>Add Student</button></a>";
+        
+        // Delete Student Button with JavaScript confirmation
+        echo "<input type='submit' name='deletebtn' value='Delete' onclick='return confirmDelete()'>";
+        echo "</form>";
 
+        // JavaScript function for confirmation
+        echo "<script>
+                function confirmDelete() {
+                    return confirm('Are you sure you want to delete selected student record(s)?');
+                }
+              </script>";
 
-      // Build SQL statment that selects a student's modules
-      //$sql = "select * from studentmodules sm, module m where m.modulecode = sm.modulecode and sm.studentid = '" . $_SESSION['id'] ."';";
+        // Render the template
+        echo template("templates/default.php", $data);
+    } else {
+        header("Location: index.php");
+    }
 
-      $result = mysqli_query($conn,$sql);
-
-      // prepare page content
-      $data['content'] .= "<table border='1'>";
-      //$data['content'] .= "<tr><th colspan='5' align='center'>Student</th></tr>";
-      $data['content'] .= "<tr><th>Student ID</th><th>First Name</th><th>Last Name</th><th>DOB</th><th>House</th><th>Town</th><th>County</th><th>Country</th><th>Postcode</th></tr>";
-      // Display the modules within the html table
-      while($row = mysqli_fetch_array($result)) {
-
-         $data['content'] .= "<tr>";
-         $data['content'] .= "<td> {$row["studentid"]} </td>";
-         $data['content'] .= "<td> {$row["firstname"]} </td>";
-         $data['content'] .= "<td> {$row["lastname"]} </td>";
-         $data['content'] .= "<td> {$row["dob"]} </td>";
-         $data['content'] .= "<td> {$row["house"]} </td>";
-         $data['content'] .= "<td> {$row["town"]} </td>";
-         $data['content'] .= "<td> {$row["county"]} </td>";
-         $data['content'] .= "<td> {$row["country"]} </td>";
-         $data['content'] .= "<td> {$row["postcode"]} </td>";
-         $data['content'] .= "</tr>";
-      }
-      $data['content'] .= "</table>";
-
-      // render the template
-      echo template("templates/default.php", $data);
-
-   } else {
-      header("Location: index.php");
-   }
-
-   echo template("templates/partials/footer.php");
-
+    echo template("templates/partials/footer.php");
 ?>
