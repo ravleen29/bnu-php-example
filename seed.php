@@ -16,12 +16,12 @@ if (isset($_SESSION['id'])) {
 $array_students = array(
    
     array(
-        "studentid" => "20000001",
+        "studentid" => "20000000",
         "password" => "test",
-        "firstname" => "Sam",
+        "firstname" => "Jon",
         "lastname" => "Smith",
-        "DOB" => "1975-11-12",
-        "house" => "25 Victoria Road",
+        "DOB" => "1974-11-10",
+        "house" => "23 Victoria Road",
         "town" => "High Wycombe",
         "county" => "Bucks",
         "country" => "UK",

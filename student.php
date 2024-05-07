@@ -28,8 +28,17 @@
             echo "<td>{$row["county"]}</td>";
             echo "<td>{$row["country"]}</td>";
             echo "<td>{$row["postcode"]}</td>";
-            echo "<td><input type='checkbox' name='students[]' value='{$row['studentid']}'></td>";
-            echo "</tr>";
+
+            if (!empty($row["image"])) {
+               echo "<td><img src='{$row["image"]}' width='100'></td>";
+           } else {
+               echo "<td>No Image</td>";
+           }
+
+           echo "<td><a href='editstudent.php?id={$row['studentid']}'><button type='button'>Edit</button></a></td>";
+           echo "<td><input type='checkbox' name='students[]' value='{$row['studentid']}'></td>";
+           echo "</tr>";
+            
         }
         echo "</table>";
 
