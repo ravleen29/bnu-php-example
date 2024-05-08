@@ -66,7 +66,7 @@ $array_students = array(
     array(
         "studentid" => "20000005",
         "password" => "test",
-        "firstname" => "Jon",
+        "firstname" => "Ron",
         "lastname" => "Smith",
         "DOB" => "1974-11-10",
         "house" => "23 Victoria Road",

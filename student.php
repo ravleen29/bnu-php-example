@@ -14,7 +14,7 @@
         // Form to delete students
         echo "<form action='deletestudents.php' method='POST'>";
         echo "<table border='1'>";
-        echo "<tr><th>Student ID</th><th>First Name</th><th>Last Name</th><th>DOB</th><th>House</th><th>Town</th><th>County</th><th>Country</th><th>Postcode</th></tr>";
+        echo "<tr><th>Student ID</th><th>First Name</th><th>Last Name</th><th>DOB</th><th>House</th><th>Town</th><th>County</th><th>Country</th><th>Postcode</th><th>Images</th></tr>";
         
         // Display students in a table
         while($row = mysqli_fetch_array($result)) {
